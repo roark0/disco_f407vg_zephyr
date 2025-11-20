@@ -1,0 +1,65 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/cpp
+{
+  "name": "C++",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "USER_UID": "${localEnv:UID}",
+      "USER_GID": "${localEnv:GID}"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-python.python",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "xaver.clang-format",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "platformio.platformio-ide"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/usr/bin/zsh",
+        "files.autoSave": "onFocusChange"
+      }
+    }
+  },
+  "remoteUser": "vscode",
+  "mounts": [
+    "source=${localEnv:HOME}/.dotfiles,target=/home/vscode/.dotfiles,type=bind",
+    "source=${localEnv:HOME}/Projects/framework-zephyr,target=/home/vscode/.platformio/packages/framework-zephyr,type=bind"
+  ],
+  "containerEnv": {
+    "USER_UID": "${localEnv:LOCAL_UID}",
+    "USER_GID": "${localEnv:LOCAL_GID}"
+  },
+  // "initializeCommand": "export LOCAL_UID=$(id -u) LOCAL_GID=$(id -g)",
+  // "postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.platformio/packages/framework-zephyr",
+  "runArgs": [
+    "--env",
+    "DISPLAY=${localEnv:DISPLAY}",
+    "--env",
+    "--network"
+  ]
+  // ,
+  //   "features": {
+  //   "ghcr.io/devcontainers/features/common-utils:2": {
+  //     "username": "vscode",
+  //     "userUid": 1000,
+  //     "userGid": 1000
+  //   },
+  //   "ghcr.io/devcontainers/features/git:1": {}
+  // }
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "gcc -v",
+  // Configure tool-specific properties.
+  // "customizations": {},
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
+}
