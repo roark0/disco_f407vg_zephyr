@@ -1,0 +1,4 @@
+.pio
+framework-zephyr
+ststm32
+build
