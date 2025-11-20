@@ -1,0 +1,24 @@
+/ {
+	model = "STMicroelectronics STM32F4DISCOVERY board";
+	compatible = "st,stm32f4discovery";
+
+	leds {
+		compatible = "gpio-leds";
+		led1: led_1 {
+			gpios = <&gpiof 12 GPIO_ACTIVE_HIGH>;
+		};
+		led_green: led_green {
+			gpios = <&gpiog 4 GPIO_ACTIVE_HIGH>;
+		};
+        led_red: led_red {
+			gpios = <&gpiog 5 GPIO_ACTIVE_HIGH>;
+		};
+        led_yellow: led_yellow {
+			gpios = <&gpiog 6 GPIO_ACTIVE_HIGH>;
+		};
+	};
+
+	aliases {
+		led1 = &led1;
+	};
+};
