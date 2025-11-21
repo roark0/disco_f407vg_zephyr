@@ -4,6 +4,7 @@ FROM mcr.microsoft.com/devcontainers/cpp:1-debian-12
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG REINSTALL_CMAKE_VERSION_FROM_SOURCE="3.22.2"
+ARG USERNAME=vscode
 
 # Optionally install the cmake for vcpkg
 COPY ./reinstall-cmake.sh /tmp/
@@ -34,21 +35,20 @@ RUN apt update && apt install -y \
      clangd clang-format \
      && rm -rf /var/lib/apt/lists/*
 
-USER vscode
-
 # Install PlatformIO
+USER vscode
+WORKDIR /home/vscode
+
+# 使用 --chown 确保文件属于 vscode
+# COPY --chown=vscode:vscode ./install_platformio.sh .
+# RUN chmod +x install_platformio.sh && ./install_platformio.sh && rm install_platformio.sh
+
 RUN wget https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py  -O /tmp/get-platformio.py && \
     python3 /tmp/get-platformio.py
 
-ARG USERNAME=vscode
-RUN mkdir -p /home/$USERNAME/.platformio/packages
-
-# COPY 会自动解引用软链接，复制真实内容
-COPY framework-zephyr /home/$USERNAME/.platformio/packages/framework-zephyr/
-
-RUN chown -R $USERNAME:$USERNAME /home/$USERNAME/.platformio/packages/framework-zephyr
-# 修复权限（确保 vscode 用户拥有它）
-# RUN chown -R $USERNAME:$USERNAME /home/$USERNAME/.platformio/packages/framework-zephyr
+RUN mkdir -p /tmp/disco_f407vg && . ~/.platformio/penv/bin/activate && \
+    pio init -d /tmp/disco_f407vg -b disco_f407vg --project-option "framework = zephyr" && \
+    pio run -d /tmp/disco_f407vg && rm -rf /tmp/disco_f407vg
 
 # [Optional] Uncomment this section to install additional vcpkg ports.
 # RUN su vscode -c "${VCPKG_ROOT}/vcpkg install <your-port-name-here>"

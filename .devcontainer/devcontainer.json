@@ -15,7 +15,6 @@
         "ms-vscode.cpptools",
         "ms-python.python",
         "ms-vscode.cmake-tools",
-        "twxs.cmake",
         "xaver.clang-format",
         "llvm-vs-code-extensions.vscode-clangd",
         "platformio.platformio-ide"
@@ -28,8 +27,7 @@
   },
   "remoteUser": "vscode",
   "mounts": [
-    "source=${localEnv:HOME}/.dotfiles,target=/home/vscode/.dotfiles,type=bind",
-    "source=${localEnv:HOME}/Projects/framework-zephyr,target=/home/vscode/.platformio/packages/framework-zephyr,type=bind"
+    "source=${localEnv:HOME}/.dotfiles,target=/home/vscode/.dotfiles,type=bind"
   ],
   "containerEnv": {
     "USER_UID": "${localEnv:LOCAL_UID}",
